@@ -1,0 +1,41 @@
+name: 云端自动移植 MIUI
+
+on:
+  workflow_dispatch:
+	inputs:
+	  rom_url_1:
+		description: '原机底包链接'
+		required: true
+		default: 'https://mirrorbits.lineageos.org/full/tissot/20230425/lineage-19.1-20230425-nightly-tissot-signed.zip'
+	  rom_url_2:
+	    description: '移植链接'
+  	    required: true
+	    default: 'https://mirrorbits.lineageos.org/full/tissot/20230425/lineage-19.1-20230425-nightly-tissot-signed.zip'
+
+
+jobs:
+  Download:
+	runs-on: ubuntu-latest
+	steps:
+	  - name: 检出代码
+		uses: actions/checkout@v2
+
+	  - name: 移植
+		run: |
+		  sudo apt update
+		  sudo apt upgrade
+		  sudo apt install git -y
+		  # 克隆项目
+		  git clone https://github.com/ljc-fight/miui_port.git
+		  cd miui_port
+		  # 安装依赖
+		  sudo bash setup.sh
+		  # 开始移植
+		  sudo bash miui_port.sh ${{ github.event.inputs.rom_url_1 }} ${{ github.event.inputs.rom_url_2 }}
+	  - name: 上传移植包
+		uses: ncipollo/release-action@v1.12.0
+		with:
+			artifacts: "~/miui_port/*.zip"
+			bodyfile: "${{ github.workspace }}/info.md"
+			tag: "OUTPUT_${{ env.BUILD_TIME }}_${{ github.run_id }}"
+			token: ${{ secrets.GITHUB_TOKEN }}
