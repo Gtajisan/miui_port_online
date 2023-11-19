@@ -32,6 +32,10 @@ jobs:
           sudo bash setup.sh
           # 开始移植
           sudo bash port.sh ${{ github.event.inputs.rom_url_1 }} ${{ github.event.inputs.rom_url_2 }}
+          
+          touch info.md
+          echo "本次移植底包下载直链：${{ github.event.inputs.rom_url_1 }}" >> info.md
+          echo "本次移植机型下载直链：${{ github.event.inputs.rom_url_2 }}" >> info.md
       - name: 上传移植包
         uses: ncipollo/release-action@v1.12.0
         with:
