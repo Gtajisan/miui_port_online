@@ -31,7 +31,7 @@ jobs:
           # 安装依赖
           sudo bash setup.sh
           # 开始移植
-          sudo bash miui_port.sh ${{ github.event.inputs.rom_url_1 }} ${{ github.event.inputs.rom_url_2 }}
+          sudo bash port.sh ${{ github.event.inputs.rom_url_1 }} ${{ github.event.inputs.rom_url_2 }}
       - name: 上传移植包
         uses: ncipollo/release-action@v1.12.0
         with:
