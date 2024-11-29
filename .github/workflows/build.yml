@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
      rom_url_1:
-        description: '原机底包链接'
+        description: 'Original base package link'
         required: true
         default: 'https://mirrorbits.lineageos.org/full/tissot/20230425/lineage-19.1-20230425-nightly-tissot-signed.zip'
      rom_url_2:
-        description: '移植链接'
+        description: 'Migration Links'
         required: true
         default: 'https://mirrorbits.lineageos.org/full/tissot/20230425/lineage-19.1-20230425-nightly-tissot-signed.zip'
 
